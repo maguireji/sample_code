@@ -2,17 +2,11 @@
 // James Maguire 2015
 
 var noSelected = 0;
-var allSelected = 0;
-var currentModule = 1;
-var playListPos = 0;
-var breadCrumbLevels = 0;
+var allSelected = 0; //DO THIS NEXT CREATE METHOD
 
 var adbeast = {};
 
-adbeast.initialize     = (function() {
-
-   var noSelected = 0;
-   var playListPos = 0;
+adbeast.initialize = (function() { 
 
    var self = {};
      
@@ -38,18 +32,9 @@ adbeast.initialize     = (function() {
 
 		$(".folderOptions").show();
 		$("#breadCrumb").html("");
-		
-		var reelObj = [];
-		var loadObject = adbeast.loadObject;
-					
-		reelObj.reeloid = -1;
-					
-		loadObject.reelObj = reelObj;
-		loadObject.loadReel();
 	
 		adbeast.loadObject.loadReels();			
 		setTimeout("adbeast.general.initTaskbar();", 1000);			
-
 
 		var breadCrumbArray = {
 			nodename: [],
@@ -63,6 +48,15 @@ adbeast.initialize     = (function() {
 		leftSideMenu.show();
 		reelContents.show();
 		$("#more").hide();
+
+		var reelObj = [];
+		var loadObject = adbeast.loadObject;
+					
+		reelObj.reeloid = 381;
+					
+		loadObject.reelObj = reelObj;
+		adbeast.loadObject.loadReel();
+
 		
    }
    
@@ -1025,13 +1019,13 @@ adbeast.loadObject   = (function() {
 										$("#breadCrumb").html("");
 										var breadCrumbArray = adbeast.loadObject.breadCrumb;
 
-										breadCrumbArray.nodename[0] = "<img src='/images/home.png' width='30px'>";
+										breadCrumbArray.nodename[0] = "<img src='/images/home.png' width='21px'>";
 										breadCrumbArray.oid[0] = "";
 										
 										breadCrumbArray.nodename[1] = $(this).data("reelObj").objectname;
 										breadCrumbArray.oid[1] = $(this).data("reelObj").reeloid;
 										
-										breadCrumbLevels = 1;
+										adbeast.general.breadCrumbLevels = 1;
 										
 										var breadCrumbText;
 								
@@ -1070,7 +1064,7 @@ adbeast.loadObject   = (function() {
 										adbeast.loadObject.parentFolderOID = $(this).data("reelObj").oid;	
 										$(this).addClass("navSelected");
 										
-										$(".breadCrumbLayer:first").html("<img src='/images/home.png' width='30px'>");
+										$(".breadCrumbLayer:first").html("<img src='/images/home.png' width='21px'>");
 										
 										timer = setTimeout(function() {
 										
@@ -1087,7 +1081,7 @@ adbeast.loadObject   = (function() {
 										// up breadCrumb level + 1
 										if ($(this).data("reelObj").isparent != null) {
 											// up breadcrumb level + 1
-											breadCrumbLevels ++;
+											adbeast.general.breadCrumbLevels ++;
 										
 											adbeast.loadObject.loadSubfolders();
 										
@@ -1125,13 +1119,13 @@ adbeast.loadObject   = (function() {
 									if(clicks === 1) {
 										$("#breadCrumb").html("");
 										
-										breadCrumbArray.nodename[0] = "<img src='/images/home.png' width='30px'>";
+										breadCrumbArray.nodename[0] = "<img src='/images/home.png' width='21px'>";
 										breadCrumbArray.oid[0] = "";
 										
 										breadCrumbArray.nodename[1] = $(this).data("reelObj").objectname;
 										breadCrumbArray.oid[1] = $(this).data("reelObj").reeloid;
 										
-										breadCrumbLevels = 1;
+										adbeast.general.breadCrumbLevels = 1;
 										
 										adbeast.loadObject.breadCrumb = breadCrumbArray;
 								
@@ -1178,7 +1172,7 @@ adbeast.loadObject   = (function() {
 										// up breadCrumb level + 1
 										if ($(this).data("reelObj").isparent != null) {
 											// up breadcrumb level + 1
-											breadCrumbLevels ++;
+											adbeast.general.breadCrumbLevels ++;
 										
 											adbeast.loadObject.loadSubfolders();
 										
@@ -1222,14 +1216,14 @@ adbeast.loadObject   = (function() {
 
 				reelObj.reeloid = $(this).attr("data-value");
 
-				adbeast.loadObject.breadCrumb.nodename[0] = "<img src='/images/home.png' width='30px'>";
+				adbeast.loadObject.breadCrumb.nodename[0] = "<img src='/images/home.png' width='21px'>";
 				adbeast.loadObject.breadCrumb.oid[0] = "";
 				
 				adbeast.loadObject.breadCrumb.nodename[1] = $(this).text();
 				adbeast.loadObject.breadCrumb.oid[1] = $(this).attr("data-value");
 				
-				breadCrumbLevels++;
-				breadCrumbLevels++;
+				adbeast.general.breadCrumbLevels++;
+				adbeast.general.breadCrumbLevels++;
 				var arrayLength = adbeast.loadObject.breadCrumb.nodename.length;
 	
 				for (var i = 0; i < arrayLength; i++) {
@@ -1360,11 +1354,11 @@ adbeast.loadObject   = (function() {
 				
 										$("#breadCrumb").html("");	
 										
-										adbeast.loadObject.breadCrumb.nodename[0] = "<img src='/images/home.png' width='30px'>";
+										adbeast.loadObject.breadCrumb.nodename[0] = "<img src='/images/home.png' width='21px'>";
 										adbeast.loadObject.breadCrumb.oid[0] = "";
 										
-										adbeast.loadObject.breadCrumb.nodename[breadCrumbLevels] = $(this).data("reelObj").objectname;
-										adbeast.loadObject.breadCrumb.oid[breadCrumbLevels] = $(this).data("reelObj").oid;
+										adbeast.loadObject.breadCrumb.nodename[adbeast.general.breadCrumbLevels] = $(this).data("reelObj").objectname;
+										adbeast.loadObject.breadCrumb.oid[adbeast.general.breadCrumbLevels] = $(this).data("reelObj").oid;
 								
 										var breadCrumbText;
 								
@@ -1431,7 +1425,7 @@ adbeast.loadObject   = (function() {
 											adbeast.loadObject.parentFolderOID = $(this).data("reelObj").oid	
 											$(this).addClass("navSelected");
 										 
-											$(".breadCrumbLayer:first").html("<img src='/images/home.png' width='30px'>");
+											$(".breadCrumbLayer:first").html("<img src='/images/home.png' width='21px'>");
 										 
 										timer = setTimeout(function() {
 										
@@ -1445,7 +1439,7 @@ adbeast.loadObject   = (function() {
 				
 										//if ($(this).data("reelObj").isparent != null) {
 											// up breadcrumb level + 1
-											breadCrumbLevels ++;
+											adbeast.general.breadCrumbLevels ++;
 										
 											adbeast.loadObject.loadSubfolders();
 										
@@ -1485,14 +1479,14 @@ adbeast.loadObject   = (function() {
 									if(clicks === 1) {
 										$("#breadCrumb").html("");	
 										
-										adbeast.loadObject.breadCrumb.nodename[breadCrumbLevels] = $(this).data("reelObj").objectname;
-										adbeast.loadObject.breadCrumb.oid[breadCrumbLevels] = $(this).data("reelObj").oid;
+										adbeast.loadObject.breadCrumb.nodename[adbeast.general.breadCrumbLevels] = $(this).data("reelObj").objectname;
+										adbeast.loadObject.breadCrumb.oid[adbeast.general.breadCrumbLevels] = $(this).data("reelObj").oid;
 								
 										var breadCrumbText;
 								
 										var arrayLength = adbeast.loadObject.breadCrumb.nodename.length;
 	
-											breadCrumbArray.nodename[0] = "<img src='/images/home.png' width='30px'>";
+											breadCrumbArray.nodename[0] = "<img src='/images/home.png' width='21px'>";
 										    breadCrumbArray.oid[0] = "";
 										
 											for (var i = 0; i < arrayLength; i++) {
@@ -1543,7 +1537,7 @@ adbeast.loadObject   = (function() {
 										adbeast.loadObject.parentFolderOID = $(this).data("reelObj").oid	
 										$(this).addClass("navSelected");
 
-										$(".breadCrumbLayer:first").html("<img src='/images/home.png' width='30px'>");
+										$(".breadCrumbLayer:first").html("<img src='/images/home.png' width='21px'>");
 										 
 										timer = setTimeout(function() {
 										
@@ -1558,7 +1552,7 @@ adbeast.loadObject   = (function() {
 				
 										if ($(this).data("reelObj").isparent != null) {
 											// up breadcrumb level + 1
-											breadCrumbLevels ++;
+											adbeast.general.breadCrumbLevels ++;
 										
 											adbeast.loadObject.loadSubfolders();
 										
@@ -1791,7 +1785,7 @@ adbeast.loadObject   = (function() {
 				 cursor:            "move",
 				 containment:       "body",
 				 connectWith:       "#leftSideMenu",
-				 cursorAt:		    { top: 5, left: 5 },
+				
 				 
                  start: function(e, ui)
                  {
@@ -1905,6 +1899,8 @@ adbeast.general      = (function() {
 	var playList;
 	var plainModal;
 	var objectGuid;
+	var breadCrumbLevels;
+	
 
 	self.shareFullscreen = function() {
 	
@@ -1935,7 +1931,7 @@ adbeast.general      = (function() {
 			success: function(data) {
 	
 	
-				console.log(data.data[0].oid);
+				//console.log(data.data[0].oid);
 				var reelObj = [];
 				var loadObject = adbeast.loadObject;
 					
@@ -2328,13 +2324,12 @@ adbeast.general      = (function() {
 								animation:  "none"
 							})
 				
-							var eClr = (currentModule == 1) ? "GQ" : "GVM";
 							
 							$.ajax({
 								type: 'GET',
 								url: "/adbeast/general/embedModal.asp",
 								async: false,
-								data: { eClr: eClr, oid: "-1" },
+								data: { eClr: "GQ", oid: "-1" },
 								success: function(data) {
 									$(".wrapper").html(data);
 								},
@@ -2452,10 +2447,10 @@ adbeast.general      = (function() {
 		try {
 	
 		var rightArrow = $("<img/>", { src:"/images/arrow_white.png", class:"modalRightArrow" }).click(function() {
-			if (playListPos + 1 != playList.oid.length) { 
+			if (adbeast.general.playListPos + 1 != adbeast.general.playList.oid.length) { 
 				adbeast.general.playListPos ++;
 				adbeast.general.loadModal();
-				if (playList.object_type[playListPos] == 3 || playList.object_type[playListPos] == 8 ) {
+				if (playList.object_type[adbeast.general.playListPos] == 3 || playList.object_type[adbeast.general.playListPos] == 8 ) {
 					$(".modal").addClass("modal_fullscreen");
 					$(".modalCloseButton").removeClass("modalCloseButton").addClass("modalCloseButton_fullscreen");
 					$(".modalLeftArrow").removeClass("modalLeftArrow").addClass("modalLeftArrow_fullscreen");
@@ -2469,7 +2464,7 @@ adbeast.general      = (function() {
 			if (playListPos != 0) { 
 				adbeast.general.playListPos --;
 				adbeast.general.loadModal();
-				if (playList.object_type[playListPos] == 3 || playList.object_type[playListPos] == 8 ) {
+				if (playList.object_type[adbeast.general.playListPos] == 3 || playList.object_type[adbeast.general.playListPos] == 8 ) {
 					$(".modal").addClass("modal_fullscreen");
 					$(".modalCloseButton").removeClass("modalCloseButton").addClass("modalCloseButton_fullscreen");
 					$(".modalLeftArrow").removeClass("modalLeftArrow").addClass("modalLeftArrow_fullscreen");
@@ -2495,7 +2490,7 @@ adbeast.general      = (function() {
 			
 			
 			$.notification ({
-				content:    'Now playing: ' + playList.objectname[playListPos],
+				content:    'Now playing: ' + playList.objectname[adbeast.general.playListPos],
 				border:     true,
 				fill:       true,
 				showTime:   true,
@@ -2533,7 +2528,7 @@ adbeast.general      = (function() {
 		});
 		
 		var titleDiv  = $("<div/>", { class:"titleDiv" }).click(function() {
-		}).html(playList.objectname[playListPos] + " (Pos) " + (playListPos + 1) + "/" + playList.oid.length);
+		}).html(playList.objectname[adbeast.general.playListPos] + " (Pos) " + (adbeast.general.playListPos + 1) + "/" + playList.oid.length);
 
 		$(".modal").append(rightArrow).append(leftArrow).append(minimizeButton).append(closeButton).append(titleDiv);
 		
@@ -2857,14 +2852,12 @@ adbeast.search      = (function() {
 					padding:    "10px",
 					animation:  "none"
 				})
-				
-				var eClr = (currentModule == 1) ? "GQ" : "GVM";
-				
+										
 				$.ajax({
 					type: 'GET',
 					url: "/adbeast/general/embedModal.asp",
 					async: false,
-					data: { eClr: eClr, oid: "-1" },
+					data: { eClr: "GQ", oid: "-1" },
 					success: function(data) {
 						$(".wrapper1").html(data);
 						
@@ -2923,6 +2916,8 @@ return self;
 jQuery( document ).ready(function( $ ) {
 
    adbeast.initialize.initialize();
+
+
 
    // SEARCH
 	$(".searchField").keydown(function(e) {
