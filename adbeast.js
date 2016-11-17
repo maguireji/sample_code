@@ -1,5 +1,6 @@
-// Adbeast Application
+// Adbeast Application. Version 2 redevelopment.
 // James Maguire 2015
+// Single Page Web Application - Javascript, jQuery
 
 var noSelected = 0;
 var allSelected = 0;
